@@ -1,0 +1,7 @@
+#Fri Oct 20 12:40:33 CEST 2017
+base.0=C\:\\Users\\carlo\\AndroidStudioProjects\\CakeDesign\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_d5c25ef1d3ef866cb6ec2f78b491cd8efa3d96ec
+renamed.1=classes2.dex
+renamed.0=classes.dex
+file.1=C\:\\Users\\carlo\\AndroidStudioProjects\\CakeDesign\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_61010ca772a1eece95be90f6cce86d73a1a4ed49\\classes.dex
+base.1=C\:\\Users\\carlo\\AndroidStudioProjects\\CakeDesign\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_61010ca772a1eece95be90f6cce86d73a1a4ed49
+file.0=C\:\\Users\\carlo\\AndroidStudioProjects\\CakeDesign\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_d5c25ef1d3ef866cb6ec2f78b491cd8efa3d96ec\\classes.dex

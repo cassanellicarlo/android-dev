@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">CakeDesign</string>
+
+    <string-array name="cake_array">
+        <item>Tiramisu</item>
+        <item>Crostata</item>
+        <item>Cioccolato</item>
+        <item>Mimosa</item>
+
+    </string-array>
+</resources>

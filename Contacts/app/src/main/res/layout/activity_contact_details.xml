@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cassanellicarlo.contacts.ContactDetails">
+
+    <TextView
+        android:id="@+id/nomeContatto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="16dp"
+        android:textSize="30dp"/>
+
+    <TextView
+        android:id="@+id/distanzaContatto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintTop_toBottomOf="@+id/nomeContatto"
+        tools:layout_editor_absoluteX="16dp"
+        android:textSize="30dp"/>
+
+    <TextView
+        android:id="@+id/giorniContatto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintTop_toBottomOf="@+id/distanzaContatto"
+        tools:layout_editor_absoluteX="16dp"
+        android:textSize="30dp"/>
+</android.support.constraint.ConstraintLayout>

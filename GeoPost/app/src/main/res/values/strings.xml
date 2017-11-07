@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GeoPost</string>
+    <string name="title_geopost">GeoPost</string>
+    <string name="login">LOGIN</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+</resources>

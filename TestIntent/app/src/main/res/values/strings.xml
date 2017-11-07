@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="nome">Inserisci il tuo nome</string>
+    <string name="bottone">Invia</string>
+</resources>

@@ -1,0 +1,4 @@
+#Thu Oct 26 11:39:24 CEST 2017
+base.0=C\:\\Users\\carlo\\AndroidStudioProjects\\RichiestaHTTP\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\3
+renamed.0=classes.dex
+file.0=C\:\\Users\\carlo\\AndroidStudioProjects\\RichiestaHTTP\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\3\\classes.dex
