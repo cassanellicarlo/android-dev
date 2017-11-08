@@ -12,7 +12,7 @@
         android:id="@+id/map"
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="336dp"
-        android:layout_height="335dp"
+        android:layout_height="268dp"
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -21,15 +21,38 @@
 
     <Button
         android:id="@+id/bottone"
-        android:onClick="addMarkers"
-        android:enabled="false"
         android:layout_width="336dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Mostra"
+        android:enabled="false"
+        android:onClick="addMarkers"
+        android:text="Mostra Utenti"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/map" />
+
+    <Button
+        android:id="@+id/bottone2"
+        android:layout_width="336dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:enabled="false"
+        android:onClick="myPosition"
+        android:text="La mia posizione"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bottone" />
+
+    <TextView
+        android:id="@+id/messaggio"
+        android:layout_width="336dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bottone2" />
 
 </android.support.constraint.ConstraintLayout>
