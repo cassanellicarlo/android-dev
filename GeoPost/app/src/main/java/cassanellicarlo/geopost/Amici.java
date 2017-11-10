@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +19,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class Amici extends AppCompatActivity {
 
@@ -65,6 +77,40 @@ public class Amici extends AppCompatActivity {
             }
         });
 
+        scaricaAmici();
+
+    }
+
+    public void scaricaAmici (){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        final String url = "https://ewserver.di.unimi.it/mobicomp/geopost/followed";
+        // Devo aggiungere il session_id dell'utente
+
+        // prepare the Request
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // display response
+                        Log.d("Response", response.toString());
+
+                        Log.d("JSON length",response.length()+"");
+
+                        ArrayList<Amico> listaAmici=new ArrayList<Amico>();
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Error.Response", error.getMessage());
+                    }
+                }
+        );
+
+        // add it to the RequestQueue
+        queue.add(getRequest);
     }
 
 
