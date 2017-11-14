@@ -27,6 +27,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -47,6 +49,8 @@ public class Amici extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+
+    private boolean amiciScaricati=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,12 +83,15 @@ public class Amici extends AppCompatActivity {
 
         scaricaAmici();
 
+
     }
 
     public void scaricaAmici (){
         RequestQueue queue = Volley.newRequestQueue(this);
         final String url = "https://ewserver.di.unimi.it/mobicomp/geopost/followed";
         // Devo aggiungere il session_id dell'utente
+
+        final ArrayList<Amico> listaAmici=new ArrayList<Amico>();
 
         // prepare the Request
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -95,9 +102,32 @@ public class Amici extends AppCompatActivity {
                         // display response
                         Log.d("Response", response.toString());
 
-                        Log.d("JSON length",response.length()+"");
+                        try {
+                            JSONArray jsonArray=response.getJSONArray("followed");
+                            for(int i=0;i<jsonArray.length();i++){
+                                Log.d("JSON ARRAY",jsonArray.get(i).toString());
+                                JSONObject amico=jsonArray.getJSONObject(i);
+                                String username=amico.getString("username");
+                                String msg=amico.getString("msg");
+                                double lat=amico.getDouble("lat");
+                                double lon=amico.getDouble("lon");
+                                Log.d("Dati utente:",username+" "+msg+" "+lat+" "+lon);
 
-                        ArrayList<Amico> listaAmici=new ArrayList<Amico>();
+                                listaAmici.add(new Amico(username,msg,lat,lon));
+                            }
+
+                            // Aggiorno la lista degli amici seguiti nel singleton
+                            DatiUtente.getInstance().setAmiciSeguiti(listaAmici);
+                            // Stampa gli amici che l'utente segue nel LOG
+                            DatiUtente.getInstance().stampaAmiciSeguiti();
+
+                            amiciScaricati=true;
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
                     }
                 },
                 new Response.ErrorListener()
@@ -111,6 +141,10 @@ public class Amici extends AppCompatActivity {
 
         // add it to the RequestQueue
         queue.add(getRequest);
+    }
+
+    public boolean isAmiciScaricati() {
+        return amiciScaricati;
     }
 
 

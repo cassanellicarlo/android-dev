@@ -23,6 +23,10 @@
             android:name=".Amici"
             android:label="@string/title_activity_amici"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBIU9m9xe38xhTTpxK_NyD1v9gcoUqtbLI"/>
     </application>
 
 </manifest>

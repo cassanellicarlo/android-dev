@@ -1,5 +1,7 @@
 package cassanellicarlo.geopost;
 
+import com.google.android.gms.maps.model.LatLng;
+
 /**
  * Created by carlo on 09/11/2017.
  */
@@ -44,6 +46,10 @@ public class Amico {
 
     public double getLon() {
         return lon;
+    }
+
+    public LatLng getLatLon (){
+        return new LatLng (this.getLat(),this.getLon());
     }
 
     public void setLon(double lon) {
