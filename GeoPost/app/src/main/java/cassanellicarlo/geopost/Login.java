@@ -1,5 +1,6 @@
 package cassanellicarlo.geopost;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,8 +22,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Login extends AppCompatActivity {
-
-    public String session_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +47,26 @@ public class Login extends AppCompatActivity {
                     public void onResponse(String response) {
                         // response
                         Log.d("Response", response); // Ritorna un Session ID
-                        session_id=response;
+                        DatiUtente.getInstance().setSession_id(response);
 
                         // Se torna un session id --> login corretto
 
-                        Intent intent = new Intent (getApplicationContext(),Amici.class);
-                        startActivity(intent);
+                        if(response.equals("")){
+                            Context context = getApplicationContext();
+                            CharSequence text = "Dati errati!";
+                            int duration = Toast.LENGTH_SHORT;
+
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
+                        }
+
+                        else{ // login corretto
+
+                            Intent intent = new Intent (getApplicationContext(),Amici.class);
+                            startActivity(intent);
+                        }
+
+
                     }
                 },
                 new Response.ErrorListener()
@@ -60,7 +74,14 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                        Log.d("Error.Response", "Errore");
+                        Log.d("Error.Response",error.getMessage());
+
+                        Context context = getApplicationContext();
+                        CharSequence text = "Errore di rete!";
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
                     }
                 }
         ) {

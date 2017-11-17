@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -31,7 +32,6 @@ public class MappaAmici extends Fragment  implements OnMapReadyCallback {
                              Bundle savedInstanceState )  {
         View rootView = inflater.inflate(R.layout.amici_mappa, container, false);
 
-
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -43,6 +43,7 @@ public class MappaAmici extends Fragment  implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mappa=googleMap;
         mappaPronta=true;
+
         creaMappaAmici();
     }
 
@@ -61,8 +62,6 @@ public class MappaAmici extends Fragment  implements OnMapReadyCallback {
                 minLat=utenti.get(i).getLat();
 
         }
-        Log.d("MINMAX","Minima Longitudine:"+minLon);
-        Log.d("MINMAX","Minima Latitudine:"+minLat);
 
         // calcolo la massima longitudine e la massima latitudine
         double maxLon=utenti.get(0).getLon();
@@ -75,8 +74,6 @@ public class MappaAmici extends Fragment  implements OnMapReadyCallback {
                 maxLat=utenti.get(i).getLat();
         }
 
-        Log.d("MINMAX","Massima Longitudine:"+maxLon);
-        Log.d("MINMAX","Massima Latitudine:"+maxLat);
 
         LatLngBounds myBounds = new LatLngBounds(new LatLng(minLat, minLon), new LatLng(maxLat, maxLon));
 
@@ -87,8 +84,11 @@ public class MappaAmici extends Fragment  implements OnMapReadyCallback {
 
     public void creaMappaAmici (){
 
+        Log.d("AMICI SCARICATI",DatiUtente.getInstance().isAmiciScaricati()+"");
+        Log.d("MAPPA PRONTA",mappaPronta+"");
+
         // Se la mappa è pronta e ho già scaricato gli amici, aggiungo i markers
-        if(mappaPronta && ((Amici) getActivity()).isAmiciScaricati() ){
+        if(mappaPronta && DatiUtente.getInstance().isAmiciScaricati() ){
 
             ArrayList<Amico> utenti=DatiUtente.getInstance().getAmiciSeguiti();
 
@@ -102,6 +102,7 @@ public class MappaAmici extends Fragment  implements OnMapReadyCallback {
                         .title(nome)
                         .snippet(msg)
                 );
+
             }
 
             // Calcolo la mia area per mostrare tutti i marker

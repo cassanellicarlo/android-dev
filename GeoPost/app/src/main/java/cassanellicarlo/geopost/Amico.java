@@ -13,6 +13,8 @@ public class Amico {
     private double lat;
     private double lon;
 
+    // aggiungere la distanza dall'utente
+
     public Amico(String username, String msg, double lat, double lon) {
         this.username = username;
         this.msg = msg;

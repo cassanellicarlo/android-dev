@@ -12,9 +12,9 @@ class DatiUtente {
     private static final DatiUtente ourInstance = new DatiUtente();
 
     private String session_id;
-
+    // aggiungere posizione attuale dell'utente
     private ArrayList<Amico> amiciSeguiti=null;
-
+    private boolean amiciScaricati=false;
     static DatiUtente getInstance() {
         return ourInstance;
     }
@@ -41,11 +41,23 @@ class DatiUtente {
         }
     }
 
+    public void resetAmici (){
+        amiciSeguiti.clear();
+    }
+
     public String getSession_id() {
         return session_id;
     }
 
     public void setSession_id(String session_id) {
         this.session_id = session_id;
+    }
+
+    public boolean isAmiciScaricati() {
+        return amiciScaricati;
+    }
+
+    public void setAmiciScaricati(boolean amiciScaricati) {
+        this.amiciScaricati = amiciScaricati;
     }
 }

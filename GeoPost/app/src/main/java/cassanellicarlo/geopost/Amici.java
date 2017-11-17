@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -25,6 +26,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -32,6 +34,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Amici extends AppCompatActivity {
 
@@ -50,12 +54,15 @@ public class Amici extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
-    private boolean amiciScaricati=false;
+    private MappaAmici mappa=null;
+    private ElencoAmici elenco=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_amici);
+
+        scaricaAmici();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -81,15 +88,19 @@ public class Amici extends AppCompatActivity {
             }
         });
 
-        scaricaAmici();
+
 
 
     }
 
+
     public void scaricaAmici (){
+
+        String session_id=DatiUtente.getInstance().getSession_id();
+        Log.d("SESSIONID:",session_id);
+
         RequestQueue queue = Volley.newRequestQueue(this);
-        final String url = "https://ewserver.di.unimi.it/mobicomp/geopost/followed";
-        // Devo aggiungere il session_id dell'utente
+        final String url = "https://ewserver.di.unimi.it/mobicomp/geopost/followed?session_id="+session_id;
 
         final ArrayList<Amico> listaAmici=new ArrayList<Amico>();
 
@@ -107,13 +118,25 @@ public class Amici extends AppCompatActivity {
                             for(int i=0;i<jsonArray.length();i++){
                                 Log.d("JSON ARRAY",jsonArray.get(i).toString());
                                 JSONObject amico=jsonArray.getJSONObject(i);
+                                boolean noMessage=false;
                                 String username=amico.getString("username");
                                 String msg=amico.getString("msg");
-                                double lat=amico.getDouble("lat");
-                                double lon=amico.getDouble("lon");
+                                double lat=0;
+                                double lon=0;
+                                if(!amico.getString("lat").equals("null"))
+                                    lat=amico.getDouble("lat");
+                                else
+                                    noMessage=true;
+                                if(!amico.getString("lon").equals("null"))
+                                    lon=amico.getDouble("lon");
+                                else
+                                    noMessage=true;
                                 Log.d("Dati utente:",username+" "+msg+" "+lat+" "+lon);
 
-                                listaAmici.add(new Amico(username,msg,lat,lon));
+                                // Controllo se l'amico ha aggiunto un messaggio ( msg, lat, lon )
+                                // Aggiungo solo gli amici con un messaggio
+                                if(!noMessage)
+                                    listaAmici.add(new Amico(username,msg,lat,lon));
                             }
 
                             // Aggiorno la lista degli amici seguiti nel singleton
@@ -121,7 +144,15 @@ public class Amici extends AppCompatActivity {
                             // Stampa gli amici che l'utente segue nel LOG
                             DatiUtente.getInstance().stampaAmiciSeguiti();
 
-                            amiciScaricati=true;
+                            DatiUtente.getInstance().setAmiciScaricati(true);
+
+                            // Creo lista degli amici
+                            elenco.creaLista();
+
+                            // Creo mappa degli amici
+                            mappa.creaMappaAmici();
+
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -143,33 +174,6 @@ public class Amici extends AppCompatActivity {
         queue.add(getRequest);
     }
 
-    public boolean isAmiciScaricati() {
-        return amiciScaricati;
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_amici, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -187,10 +191,10 @@ public class Amici extends AppCompatActivity {
             // returning the current tab
             switch (position){
                 case 0:
-                    MappaAmici mappa=new MappaAmici();
+                    mappa=new MappaAmici();
                     return mappa;
                 case 1:
-                    ElencoAmici elenco=new ElencoAmici();
+                    elenco=new ElencoAmici();
                     return elenco;
                 default:
                     return null;
