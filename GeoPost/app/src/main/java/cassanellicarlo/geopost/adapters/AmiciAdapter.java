@@ -1,4 +1,4 @@
-package cassanellicarlo.geopost;
+package cassanellicarlo.geopost.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import cassanellicarlo.geopost.models.Amico;
+import cassanellicarlo.geopost.R;
 
 /**
  * Created by carlo on 15/11/2017.
@@ -49,7 +51,7 @@ public class AmiciAdapter extends ArrayAdapter<Amico> {
 
             tt1.setText(a.getUsername());
             tt2.setText(a.getMsg());
-            tt3.setText("km");  // devo mettere la distanza
+            tt3.setText((int)a.getDistanza()+" m");
         }
 
         return v;

@@ -1,5 +1,6 @@
-package cassanellicarlo.geopost;
+package cassanellicarlo.geopost.models;
 
+import android.location.Location;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -8,18 +9,18 @@ import java.util.ArrayList;
  * Created by carlo on 14/11/2017.
  */
 
-class DatiUtente {
-    private static final DatiUtente ourInstance = new DatiUtente();
+public class DatiUtente {
+    public static final DatiUtente ourInstance = new DatiUtente();
 
-    private String session_id;
-    // aggiungere posizione attuale dell'utente
-    private ArrayList<Amico> amiciSeguiti=null;
-    private boolean amiciScaricati=false;
-    static DatiUtente getInstance() {
+    public String session_id;
+    public Location posizioneAttuale;
+    public ArrayList<Amico> amiciSeguiti=null;
+    public boolean amiciScaricati=false;
+    public static DatiUtente getInstance() {
         return ourInstance;
     }
 
-    private DatiUtente() {
+    public DatiUtente() {
         amiciSeguiti=new ArrayList<Amico>();
     }
 
@@ -59,5 +60,13 @@ class DatiUtente {
 
     public void setAmiciScaricati(boolean amiciScaricati) {
         this.amiciScaricati = amiciScaricati;
+    }
+
+    public Location getPosizioneAttuale() {
+        return posizioneAttuale;
+    }
+
+    public void setPosizioneAttuale(Location posizioneAttuale) {
+        this.posizioneAttuale = posizioneAttuale;
     }
 }

@@ -1,4 +1,4 @@
-package cassanellicarlo.geopost;
+package cassanellicarlo.geopost.fragments;
 
 /**
  * Created by carlo on 09/11/2017.
@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,6 +20,10 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+
+import cassanellicarlo.geopost.R;
+import cassanellicarlo.geopost.models.Amico;
+import cassanellicarlo.geopost.models.DatiUtente;
 
 public class MappaAmici extends Fragment  implements OnMapReadyCallback {
 
@@ -50,7 +53,7 @@ public class MappaAmici extends Fragment  implements OnMapReadyCallback {
     // per centrare la mappa e far vedere tutti i punti che voglio mostrare
     public LatLngBounds myArea (){
 
-        ArrayList<Amico> utenti=DatiUtente.getInstance().getAmiciSeguiti();
+        ArrayList<Amico> utenti= DatiUtente.getInstance().getAmiciSeguiti();
         // calcolo la minima longitudine e la minima latitudine
         double minLon=utenti.get(0).getLon();
         double minLat=utenti.get(0).getLat();

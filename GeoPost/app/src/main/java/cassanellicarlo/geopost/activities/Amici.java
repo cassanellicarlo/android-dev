@@ -1,8 +1,8 @@
-package cassanellicarlo.geopost;
+package cassanellicarlo.geopost.activities;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -12,21 +12,16 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -34,8 +29,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
+import cassanellicarlo.geopost.fragments.ElencoAmici;
+import cassanellicarlo.geopost.fragments.MappaAmici;
+import cassanellicarlo.geopost.R;
+import cassanellicarlo.geopost.models.Amico;
+import cassanellicarlo.geopost.models.DatiUtente;
 
 public class Amici extends AppCompatActivity {
 
@@ -56,6 +55,8 @@ public class Amici extends AppCompatActivity {
 
     private MappaAmici mappa=null;
     private ElencoAmici elenco=null;
+    private FloatingActionButton fab;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,12 +80,14 @@ public class Amici extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
+       // Nuovo stato (status_update)
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Log.d("FloatingButton","NUOVO STATO");
+                Intent intent=new Intent(getApplicationContext(),NuovoStato.class);
+                startActivity(intent);
             }
         });
 
@@ -94,9 +97,10 @@ public class Amici extends AppCompatActivity {
     }
 
 
+
     public void scaricaAmici (){
 
-        String session_id=DatiUtente.getInstance().getSession_id();
+        String session_id= DatiUtente.getInstance().getSession_id();
         Log.d("SESSIONID:",session_id);
 
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -133,10 +137,9 @@ public class Amici extends AppCompatActivity {
                                     noMessage=true;
                                 Log.d("Dati utente:",username+" "+msg+" "+lat+" "+lon);
 
-                                // Controllo se l'amico ha aggiunto un messaggio ( msg, lat, lon )
-                                // Aggiungo solo gli amici con un messaggio
-                                if(!noMessage)
+                                if(!noMessage){
                                     listaAmici.add(new Amico(username,msg,lat,lon));
+                                }
                             }
 
                             // Aggiorno la lista degli amici seguiti nel singleton
@@ -146,8 +149,8 @@ public class Amici extends AppCompatActivity {
 
                             DatiUtente.getInstance().setAmiciScaricati(true);
 
-                            // Creo lista degli amici
-                            elenco.creaLista();
+                            // Creo lista degli amici elenco.creaLista();
+
 
                             // Creo mappa degli amici
                             mappa.creaMappaAmici();
@@ -172,6 +175,11 @@ public class Amici extends AppCompatActivity {
 
         // add it to the RequestQueue
         queue.add(getRequest);
+    }
+
+    public void profilo(View view) {
+        Intent intent=new Intent(this, Profilo.class);
+        startActivity(intent);
     }
 
 
@@ -207,5 +215,29 @@ public class Amici extends AppCompatActivity {
             // Show 2 total pages.
             return 2;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater=getMenuInflater();
+        menuInflater.inflate(R.menu.amici_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch(item.getItemId()){
+            case R.id.nuovoAmico:
+                Intent intent=new Intent(getApplicationContext(),NuovoAmico.class);
+                startActivity(intent);
+                break;
+            case R.id.profilo:
+                Intent intent2=new Intent(getApplicationContext(),Profilo.class);
+                startActivity(intent2);
+                break;
+        }
+        return true;
     }
 }

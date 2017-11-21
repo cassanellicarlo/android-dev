@@ -1,4 +1,6 @@
-package cassanellicarlo.geopost;
+package cassanellicarlo.geopost.models;
+
+import android.location.Location;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -12,8 +14,7 @@ public class Amico {
     private String msg;
     private double lat;
     private double lon;
-
-    // aggiungere la distanza dall'utente
+    private float distanza;
 
     public Amico(String username, String msg, double lat, double lon) {
         this.username = username;
@@ -56,5 +57,21 @@ public class Amico {
 
     public void setLon(double lon) {
         this.lon = lon;
+    }
+
+    public double getDistanza() {
+        return distanza;
+    }
+
+    public void setDistanza(float distanza) {
+        this.distanza = distanza;
+    }
+
+    // Da latitudine e longitudine, crea un oggetto Location
+    public Location getLocation (){
+        Location crntLocation=new Location("crntlocation");
+        crntLocation.setLatitude(lat);
+        crntLocation.setLongitude(lon);
+        return crntLocation;
     }
 }

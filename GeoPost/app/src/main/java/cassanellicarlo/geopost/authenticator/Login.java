@@ -1,10 +1,9 @@
-package cassanellicarlo.geopost;
+package cassanellicarlo.geopost.authenticator;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -20,6 +19,10 @@ import com.android.volley.toolbox.Volley;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import cassanellicarlo.geopost.activities.Amici;
+import cassanellicarlo.geopost.models.DatiUtente;
+import cassanellicarlo.geopost.R;
 
 public class Login extends AppCompatActivity {
 
