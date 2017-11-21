@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".authenticator.Login">
+        <activity android:name=".authenticator.Login"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,14 +23,16 @@
         <activity
             android:name=".activities.Amici"
             android:label="@string/title_activity_amici"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBIU9m9xe38xhTTpxK_NyD1v9gcoUqtbLI" />
 
         <activity android:name=".activities.NuovoAmico" />
-        <activity android:name=".activities.NuovoStato" />
+        <activity android:name=".activities.NuovoStato"
+            android:screenOrientation="portrait"/>
         <activity android:name=".activities.Profilo"></activity>
     </application>
 

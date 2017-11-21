@@ -1,5 +1,6 @@
 package cassanellicarlo.geopost.authenticator;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -40,6 +43,7 @@ public class Login extends AppCompatActivity {
         Log.d("User:",username);
         Log.d("Psw:",password);
 
+
         // Post Request for login with Volley
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://ewserver.di.unimi.it/mobicomp/geopost/login";
@@ -64,7 +68,6 @@ public class Login extends AppCompatActivity {
                         }
 
                         else{ // login corretto
-
                             Intent intent = new Intent (getApplicationContext(),Amici.class);
                             startActivity(intent);
                         }
