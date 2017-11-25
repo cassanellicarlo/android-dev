@@ -212,11 +212,11 @@ public class ElencoAmici extends Fragment implements LocationListener, GoogleApi
             DatiUtente.getInstance().getAmiciSeguiti().get(i).setDistanza(distanza);
         }
 
+        // Ordino gli amici per distanza (in ordine crescente)
+        DatiUtente.getInstance().sortAmiciByDistance();
+
         // Dico all'adapter che i dati sono cambiati
         myAdapter.notifyDataSetChanged();
-
-
-
     }
 
     @Override

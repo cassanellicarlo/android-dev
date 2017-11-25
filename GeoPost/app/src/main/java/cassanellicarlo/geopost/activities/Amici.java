@@ -63,7 +63,7 @@ public class Amici extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_amici);
 
-        scaricaAmici();
+        scaricaAmici(); // Scarico gli amici dal server
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -90,12 +90,7 @@ public class Amici extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
-
     }
-
 
 
     public void scaricaAmici (){
@@ -105,8 +100,6 @@ public class Amici extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
         final String url = "https://ewserver.di.unimi.it/mobicomp/geopost/followed?session_id="+session_id;
-
-        final ArrayList<Amico> listaAmici=new ArrayList<Amico>();
 
         // prepare the Request
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -138,19 +131,13 @@ public class Amici extends AppCompatActivity {
                                 Log.d("Dati utente:",username+" "+msg+" "+lat+" "+lon);
 
                                 if(!noMessage){
-                                    listaAmici.add(new Amico(username,msg,lat,lon));
+                                    DatiUtente.getInstance().getAmiciSeguiti().add(new Amico(username,msg,lat,lon));
                                 }
                             }
 
-                            // Aggiorno la lista degli amici seguiti nel singleton
-                            DatiUtente.getInstance().setAmiciSeguiti(listaAmici);
                             // Stampa gli amici che l'utente segue nel LOG
                             DatiUtente.getInstance().stampaAmiciSeguiti();
-
                             DatiUtente.getInstance().setAmiciScaricati(true);
-
-                            // Creo lista degli amici elenco.creaLista();
-
 
                             // Creo mappa degli amici
                             mappa.creaMappaAmici();
@@ -175,11 +162,6 @@ public class Amici extends AppCompatActivity {
 
         // add it to the RequestQueue
         queue.add(getRequest);
-    }
-
-    public void profilo(View view) {
-        Intent intent=new Intent(this, Profilo.class);
-        startActivity(intent);
     }
 
 
@@ -217,23 +199,25 @@ public class Amici extends AppCompatActivity {
         }
     }
 
+
+    // Crea il menu con le due icone nella bar in alto
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         MenuInflater menuInflater=getMenuInflater();
         menuInflater.inflate(R.menu.amici_menu,menu);
         return true;
     }
 
+    // In base all'icona cliccata, passo a un'altra activity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch(item.getItemId()){
-            case R.id.nuovoAmico:
+            case R.id.nuovoAmico: // Passo all'activity NuovoAmico
                 Intent intent=new Intent(getApplicationContext(),NuovoAmico.class);
                 startActivity(intent);
                 break;
-            case R.id.profilo:
+            case R.id.profilo: // Passo all'activity Profilo
                 Intent intent2=new Intent(getApplicationContext(),Profilo.class);
                 startActivity(intent2);
                 break;

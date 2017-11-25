@@ -1,6 +1,7 @@
 package cassanellicarlo.geopost.models;
 
 import android.location.Location;
+import android.support.annotation.NonNull;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -8,13 +9,13 @@ import com.google.android.gms.maps.model.LatLng;
  * Created by carlo on 09/11/2017.
  */
 
-public class Amico {
+public class Amico implements Comparable {
 
     private String username;
     private String msg;
     private double lat;
     private double lon;
-    private float distanza;
+    private double distanza;
 
     public Amico(String username, String msg, double lat, double lon) {
         this.username = username;
@@ -63,7 +64,7 @@ public class Amico {
         return distanza;
     }
 
-    public void setDistanza(float distanza) {
+    public void setDistanza(double distanza) {
         this.distanza = distanza;
     }
 
@@ -73,5 +74,15 @@ public class Amico {
         crntLocation.setLatitude(lat);
         crntLocation.setLongitude(lon);
         return crntLocation;
+    }
+
+    // Implemento compareTo per ordinare gli amici per distanza
+    @Override
+    public int compareTo(@NonNull Object o) {
+
+        Amico a=(Amico) o;
+        double distanzaAmico=a.getDistanza();
+
+        return (int) (distanza-distanzaAmico);
     }
 }

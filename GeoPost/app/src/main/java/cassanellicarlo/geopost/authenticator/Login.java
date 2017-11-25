@@ -36,13 +36,13 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
     }
 
+    // Click del pulsante LOGIN
     public void login(View view) {
         final String username=((EditText)findViewById(R.id.username)).getText().toString();
         final String password=((EditText)findViewById(R.id.password)).getText().toString();
 
         Log.d("User:",username);
         Log.d("Psw:",password);
-
 
         // Post Request for login with Volley
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -67,7 +67,7 @@ public class Login extends AppCompatActivity {
                             toast.show();
                         }
 
-                        else{ // login corretto
+                        else{ // login corretto -> Passo all'activity "Amici"
                             Intent intent = new Intent (getApplicationContext(),Amici.class);
                             startActivity(intent);
                         }
@@ -102,8 +102,6 @@ public class Login extends AppCompatActivity {
             }
         };
         queue.add(postRequest);
-
-
 
     }
 }
